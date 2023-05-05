@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 <section class="container my-4">
     <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertDuplicate" style="display:none">
 
@@ -54,18 +55,23 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">Tên xe</h5>
-                    <p class="card-text">Nơi đi: <span>Địa điểm đi</span></p>
-                    <p class="card-text">Nơi đến: <span>Địa điểm đến</span></p>
-                    <p class="card-text">Thời gian bắt đầu: <span>dd/mm/yyyy hh:mm:ss</span></p>
-                    <p class="card-text">Thời gian kết thúc: <span>dd/mm/yyyy hh:mm:ss</span></p>
+                    <h5 class="card-title">Tên xe: Nhà xe Hoàng Huy</h5>
+                    <p class="card-text">Nơi đi: <span> Hà Nội</span></p>
+                    <p class="card-text">Nơi đến: <span>TP Hồ Chí Minh</span></p>
+                    <p class="card-text">Thời gian bắt đầu: <span>05/05/2023 18:30:00</span></p>
+                    <p class="card-text">Thời gian kết thúc: <span>06/05/2023 10:00:00</span></p>
                     <p class="card-price">Giá vé: <span>600,000 VNĐ</span></p>
                     <div class="card-seats">
                         <span>Số chỗ trống: </span><span>42</span>
                     </div>
                     <div class="card-buttons text-right">
                         <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                        <se:authorize access="isAuthenticated()">
                         <a href="#" class="btn btn-success">Đặt vé ngay</a>
+                        </se:authorize>
+                        <se:authorize access="!isAuthenticated()">
+                            <a href="<c:url value="/login"/>" class="btn btn-secondary">Đăng nhập để đặt vé</a>
+                        </se:authorize>
                     </div>
                 </div>
             </div>

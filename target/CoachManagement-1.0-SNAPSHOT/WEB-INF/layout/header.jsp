@@ -24,11 +24,12 @@
                    
                     <se:authorize access="hasRole('ROLE_ADMIN')">
                         <li class="nav-item">
-                            <a class="nav-link" href="<c:url value="/admin/route-manage"/>"> Quản Lý tuyến xe </a>
+                            <a class="nav-link" href="<c:url value="/admin/bus-manage"/>">Quản Lý xe</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href=""<c:url value="/admin/bus-manage"/>">Quản Lý xe</a>
+                            <a class="nav-link" href="<c:url value="/admin/route-manage"/>"> Quản Lý tuyến xe </a>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="<c:url value="/admin/trip-manage"/>">Quản Lý chuyến xe</a>
                         </li>
@@ -44,13 +45,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="<c:url value="/login"/>">Đăng Nhập</a>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="">Đăng Ký</a>
                         </li>
                     </c:when>
                     <c:when test="${pageContext.request.userPrincipal.name != null}">
-                        <li class="nav-item">
-                            <a class="nav-link" href="<c:url value="/"/>">Chào mừng ${pageContext.session.getAttribute("currentUser").firtName}</a>
+                         <c:set var="fullName" value="${user.fullName}" />
+                        <li class="nav-item fw-bold">
+                            <a class="nav-link" href="<c:url value="/"/>">Chào mừng  ${pageContext.request.userPrincipal.name}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<c:url value="/logout"/>">Đăng Xuất</a>

@@ -9,6 +9,7 @@ import com.dtn.repository.UserRepository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,24 @@ public class UserRepositoryImpl implements UserRepository {
 
         Root rootUser = q.from(User.class);
         q.select(rootUser);
-        
+
         q.where(builder.equal(rootUser.get("username"), username));
-        
+
         Query query = session.createQuery(q);
         return (User) query.getSingleResult();
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.save(user);
+            return true;
+        } catch (HibernateException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return false;
     }
 
 }

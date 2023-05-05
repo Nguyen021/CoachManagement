@@ -8,7 +8,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <h1 class="text-center text-secondary">Quản Lý Xe Khách</h1>
+
 <c:url value="/admin/bus-manage" var="action"/>
+
 <c:if test="${errMsg != null}">${errMsg}</c:if>
 
 <form:form method="post" action="${action}" enctype="multipart/form-data" modelAttribute="bus">
@@ -17,16 +19,19 @@
                     id="name" placeholder="Tên sản phẩm" name="name"/>
         <label for="name">Tên xe</label>
     </div>
+        
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="numberplates"
                     id="numberplates" placeholder="Biển số xe" name="numberplates"/>
         <label for="name">Biển định danh xe:</label>
     </div>
+        
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="description"
                     id="description" placeholder="Mô tả cho xe" name="description"/>
         <label for="name">Mô tả xe:</label>
     </div>
+        
     <div class="form-floating">
         <form:select class="form-select" path="categoryId" id="categoryId" name="categoryId">
             <c:forEach items="${categories}" var="c">
@@ -43,6 +48,8 @@
         </form:select>
         <label for="categoryId" class="form-label">Loại xe:</label>
     </div>
+        
+        
     <div class="form-floating mb-3 mt-3">
         <form:input type="file" class="form-control" path="file"
                     id="file"  name="file"/>
@@ -50,7 +57,7 @@
     </div>
     <c:if test="${bus.image != null}">
         <div class="form-floating mb-3 mt-3">
-            <<img src="${bus.image}" width="120" alt="alt"/>
+            <img src="${bus.image}" width="120" alt="alt"/>
         </div>
     </c:if>
 
@@ -69,8 +76,10 @@
     <div class="form-floating mb-3 mt-3">
         <c:choose>
             <c:when test="${bus.id > 0}">
+                
                 <form:hidden path="id" />
                 <form:hidden path="image" />
+                
                 <input type="submit" value="Cập nhập xe" class="btn btn-success"/>
             </c:when>
             <c:otherwise>
@@ -103,7 +112,7 @@
                 <td style="width: 300px">${b.description}</td>
                 <td>
                     <c:url value="/api/bus/${b.id}" var="endpoint"/>
-                    <input type="button" onclick="deleteBus('${endpoint}',${b.id})" value="Xóa" class="btn btn-danger"/>
+                    <input type="button" onclick="deleteBus('${endpoint}',${b.id})" value="Xóa" class="btn btn-secondary"/>
                     <a href="<c:url value="/admin/bus-manage/${b.id}" />" class="btn btn-info">Cập nhập</a>
                 </td>
             </tr>

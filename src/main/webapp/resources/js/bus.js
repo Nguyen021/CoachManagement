@@ -9,7 +9,7 @@ function deleteBus(endpoint,id){
         method:"delete"
     }).then((res) => {
         if(res.status == 204){
-            document.getElementById(`bus${id}`).style.display = "none";
+            document.getElementById(`bus${id}`).style.display = "none";  
         }else{
             alert("Lỗi hệ thống khi xóa bus!!")
         }

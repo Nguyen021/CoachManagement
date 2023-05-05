@@ -36,10 +36,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-    @Autowired
-    private LoginSuccessHandler loginHandler;
-    @Autowired
-    private MyLogoutSuccessHandler logoutHandler;
+    
+//    @Autowired
+//    private LoginSuccessHandler loginHandler;
+//    @Autowired
+//    private MyLogoutSuccessHandler logoutHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -56,22 +57,23 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http)
             throws Exception {
-        http.formLogin().loginPage("/login")
+        http.formLogin()
                 .usernameParameter("username")
                 .passwordParameter("password");
 
-//        http.formLogin().defaultSuccessUrl("/")
-//                .failureUrl("/login?error");
-        http.formLogin().successHandler(this.loginHandler)
+        http.formLogin().defaultSuccessUrl("/")
                 .failureUrl("/login?error");
+        
+//        http.formLogin().successHandler(this.loginHandler)
+//                .failureUrl("/login?error");
 
-//        http.logout().logoutSuccessUrl("/login");
-        http.logout().logoutSuccessHandler(this.logoutHandler);
+        http.logout().logoutSuccessUrl("/login");
+//        http.logout().logoutSuccessHandler(this.logoutHandler);
         http.exceptionHandling()
                 .accessDeniedPage("/login?accessDenied");
 
         http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers("/**/add")
+                .antMatchers("/admin/**")
                 .access("hasRole('ROLE_ADMIN')");
 
         http.csrf().disable();

@@ -33,27 +33,6 @@ public class BusRepositoryImpl implements BusRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public boolean addOrUpdateBus(Bus bus) {
-        Session s = factory.getObject().getCurrentSession();
-        try {
-            if(bus.getId() > 0)
-                s.update(bus);
-            else
-                s.save(bus);
-            return true;
-        } catch (HibernateException ex) {
-            return false;
-        }
-
-    }
-
-    @Override
-    public Bus getBusById(int id) {
-        Session s = factory.getObject().getCurrentSession();
-        return s.get(Bus.class, id);
-    }
-
-    @Override
     public List<Bus> getBuses(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
@@ -85,13 +64,35 @@ public class BusRepositoryImpl implements BusRepository {
     }
 
     @Override
+    public Bus getBusById(int id) {
+        Session s = factory.getObject().getCurrentSession();
+        return s.get(Bus.class, id);
+    }
+
+    @Override
+    public boolean addOrUpdateBus(Bus bus) {
+        Session s = factory.getObject().getCurrentSession();
+        try {
+//            if (bus.getId() > 0) {
+//                s.update(bus);
+//            } else {
+                s.save(bus);
+//            }
+            return true;
+        } catch (HibernateException ex) {
+            return false;
+        }
+
+    }
+
+    @Override
     public boolean deleteBus(int id) {
         Session s = factory.getObject().getCurrentSession();
         Bus b = this.getBusById(id);
-        try{
+        try {
             s.delete(b);
             return true;
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             return false;
         }
     }

@@ -22,25 +22,13 @@ import org.springframework.stereotype.Service;
  * @author Nguyen0210
  */
 @Service
-public class BusServiceImpl implements BusService{
+public class BusServiceImpl implements BusService {
+
     @Autowired
     private BusRepository busRepo;
+    
     @Autowired
     private Cloudinary cloudinary;
-    
-    @Override
-    public boolean addOrUpdateBus(Bus bus) {
-        if(!bus.getFile().isEmpty() ){
-            try {
-                Map res = this.cloudinary.uploader().upload(bus.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
-                bus.setImage(res.get("secure_url").toString());
-            } catch (IOException ex) {
-                Logger.getLogger(BusServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return this.busRepo.addOrUpdateBus(bus);
-    }
 
     @Override
     public List<Bus> getBuses(Map<String, String> params) {
@@ -53,8 +41,24 @@ public class BusServiceImpl implements BusService{
     }
 
     @Override
-    public boolean deleteBus(int id) {
-         return this.busRepo.deleteBus(id);
+    public boolean addOrUpdateBus(Bus bus) {
+        if (!bus.getFile().isEmpty()) {
+//             if (bus.getFile() != null) {
+            try {
+                Map rs = this.cloudinary.uploader().upload(bus.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                
+                bus.setImage(rs.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(BusServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return this.busRepo.addOrUpdateBus(bus);
     }
-    
+
+    @Override
+    public boolean deleteBus(int id) {
+        return this.busRepo.deleteBus(id);
+    }
+
 }

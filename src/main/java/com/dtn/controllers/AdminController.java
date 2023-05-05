@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,7 +37,7 @@ public class AdminController {
 
     @Autowired
     private RouteService routeService;
-    
+
     @Autowired
     private StatsService statsService;
 
@@ -57,12 +56,13 @@ public class AdminController {
 //2
 
     @PostMapping("/bus-manage")
-    public String addBus(Model model, @ModelAttribute(value = "bus") Bus bus) {
-        if (this.busService.addOrUpdateBus(bus) == true) {
+    public String addBus(Model model, @ModelAttribute(value = "bus") Bus b) {
+        if (this.busService.addOrUpdateBus(b) == true) {
             return "redirect:/admin/bus-manage";
         } else {
             model.addAttribute("errMsg", "Lỗi khi thêm hoặc cập nhập bus");
         }
+
         return "bus-manage";
     }
 //3
@@ -73,7 +73,6 @@ public class AdminController {
         return "bus-manage";
     }
 
-    
 //    Tuyến Xe
     @GetMapping("/route-manage")
     public String route(Model model) {
@@ -90,20 +89,20 @@ public class AdminController {
         }
         return "route-manage";
     }
-    
+
     @GetMapping("/route-manage/{routeId}")
     public String UpdateRoute(Model model, @PathVariable(value = "routeId") int id) {
         model.addAttribute("route", this.routeService.getRouteById(id));
         return "route-manage";
     }
-     
+
     @GetMapping("/stats")
     public String stats(Model model,
-            @RequestParam(name = "year", defaultValue = "2022") Integer year){
-         model.addAttribute("revenueQuarter", this.statsService.getRevenueByQuarter(year));
+            @RequestParam(name = "year", defaultValue = "2023") Integer year) {
+        model.addAttribute("revenueQuarter", this.statsService.getRevenueByQuarter(year));
         return "stats";
     }
-    
+
 //    Chuyến Xe
     @GetMapping("/trip-manage")
     public String tripManage(Model model) {

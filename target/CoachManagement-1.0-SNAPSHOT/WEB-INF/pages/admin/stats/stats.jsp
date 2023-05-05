@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h1 class="text-center text-secondary">Thống Kê Báo Cáo</h1>
 
 <div class="content-wrapper">
@@ -18,8 +19,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Thống kê</li>
+                        <li class="breadcrumb-item "><a class="text-decoration-none text-secondary" href="#">Home</a></li>
+                        <li class="breadcrumb-item active fw-bold">Thống kê</li>
                     </ol>
                 </div>
             </div>
@@ -39,7 +40,7 @@
                                     class="btn btn-tool"
                                     data-card-widget="collapse"
                                     >
-                                    <i class="fas fa-minus"></i>
+                                 
                                 </button>
                             </div>
                         </div>
@@ -47,8 +48,8 @@
                             <table class="table table-striped projects text-center">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10% ">
-                                            Năm
+                                        <th style="width: 15% ">
+                                            Quý (1,2,3,4 -> tháng 1-3, 3-6, 6-9, 9-12)
                                         </th>
                                         <th style="width: 15%">
                                             Tổng Doanh Thu
@@ -59,7 +60,7 @@
                                     <c:forEach var="r" items="${revenueQuarter}">
                                         <tr>
                                             <td>${r[0]}</td>
-                                            <td>${r[1]}</td>
+                                            <td> <fmt:formatNumber value="${r[1]}" type="currency" currencySymbol=""/> VNĐ </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -69,12 +70,12 @@
                 </div>
                 <div class="col-md-5">
                     <form class="my-1">
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <input type="number" min="2020" 
                                    class="form-control" 
                                    placeholder="Năm ..." name="year" />
                         </div>
-                        <input type="submit" value="Lọc dữ liệu" class="btn btn-danger" />
+                        <input type="submit" value="Lọc dữ liệu" class="btn btn-danger mb-2" />
                     </form>
                     <div class="card card-info">
                         <div class="card-header">
